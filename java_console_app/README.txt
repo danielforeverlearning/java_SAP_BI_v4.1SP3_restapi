@@ -1,14 +1,22 @@
 
-//*****************************************************************************************************************************************
-//If not using eclipse IDE, you can compile with:
-//C:\Program Files\java\jdk1.8.0_144\bin\javac.exe       console_restapi.java RestAPICaller.java RestAPIResponse.java XML_helper.java SAP_BI_WebIntel_REST_helper.java  DocumentInfo.java
+//*********************************************************************************************************************
+//(1) If not using eclipse IDE, you can get the package compiled from windows command prompt
+//    assuming all *.java files are in the current directory:
+//    "C:\Program Files\java\jdk1.8.0_144\bin\javac.exe" -d .  console_restapi.java DocumentInfo.java GUI_Frame.java RestAPICaller.java RestAPIResponse.java SAP_BI_WebIntel_REST_helper.java Testing_Debugging_helper.java Tree_Known_Path_FolderID.java Tree_Unknown_Path_FolderID.java User_Input.java XML_helper.java
 //
-//Get the package compiled:
-//C:\Program Files\java\jdk1.8.0_144\bin\javac.exe -d .  console_restapi.java RestAPICaller.java RestAPIResponse.java XML_helper.java SAP_BI_WebIntel_REST_helper.java  DocumentInfo.java
+//(2) Create the executable jar file:
+//    "C:\Program Files\java\jdk1.8.0_144\bin\jar.exe" cmf console_restapi.mf console_restapi.jar *.java console_restapi
 //
-//and run with:
-//C:\Program Files\java\jdk1.8.0_144\bin\java.exe   console_restapi.console_restapi
-//*****************************************************************************************************************************************
+//(3) Check the contents of the new jar file:
+//    "C:\Program Files\java\jdk1.8.0_144\bin\jar.exe" tf  console_restapi.jar
+//
+//(4) Run the executable jar file:
+//    "C:\Program Files\java\jdk1.8.0_144\bin\java.exe" -jar console_restapi.jar
+//
+//(5) If all you have is this .jar file and you do not have the source code .java files, you can extract the contents of the jar file to get the source code:
+//    "C:\Program Files\java\jdk1.8.0_144\bin\jar.exe"  xvf  console_restapi.jar
+//*********************************************************************************************************************
+
 
 //**********************************************************************************************************************
 //(1)
