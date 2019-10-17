@@ -1,87 +1,49 @@
 
 package console_restapi;
 
-import java.io.ByteArrayOutputStream;
-import java.io.ByteArrayInputStream;
-import java.io.BufferedReader;
-import java.io.DataOutputStream;
-import java.io.InputStreamReader;
-import java.io.FileWriter;
-
-import java.net.HttpURLConnection;
-import java.net.URL;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Set;
-
-import javax.net.ssl.HttpsURLConnection;
-
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
-import org.w3c.dom.Document;
-import org.w3c.dom.NodeList;
-import org.w3c.dom.Node;
-import org.w3c.dom.Element;
 
 
 
 public class console_restapi {
 	
 	
-	
 	public static void main(String[] args) throws Exception {
-
-		if (args.length < 3)
-		{
-			System.out.println("Usage:   console_restapi.console_restapi  (username) (password) (PROTOCOL_HOST_PORT)");
-			System.out.println("Example: console_restapi.console_restapi  myusername  mypassword  http://myhost:myport/");
-			System.out.println("Example: console_restapi.console_restapi  myusername  mypassword  http://myhost:6405/");
-			return;
-		}
 		
-		String myusername         = args[0];
-		String mypassword         = args[1];
-		String PROTOCOL_HOST_PORT = args[2];
+		//***********************************************************************************
+		//This does actual restful-API calls.
+		//Because it takes so long, i can test other parts of the app using old files saved.
+		//***********************************************************************************
+		User_Input myinput = new User_Input(); 
+		myinput.GetUserInput();
+		SAP_BI_WebIntel_REST_helper bihelp = new SAP_BI_WebIntel_REST_helper(myinput.myusername, myinput.mypassword, myinput.PROTOCOL_HOST_PORT);
 		
-		SAP_BI_WebIntel_REST_helper bihelp = new SAP_BI_WebIntel_REST_helper(myusername, mypassword, PROTOCOL_HOST_PORT);
 		//bihelp.Demo();
+		bihelp.Demo2();
+		//bihelp.TEST_SAVE_ALL_DOCUMENTS("my_test_output_from_" + myinput.server_type + ".txt");
 		
-		try {
-			HashMap<String, ArrayList<DocumentInfo>> map = bihelp.Save_All_Documents();
-			if (map != null) {
-				int ff=0;
-				FileWriter myfile = new FileWriter("my_test_save_all_documents.txt");
-				
-				Set<String> keyset = map.keySet();
-				Object[] mykeyobjs    = keyset.toArray();
-				for (int kk=0; kk < mykeyobjs.length; kk++) {
-					
-					String key = (String)mykeyobjs[kk];
-					
-					myfile.write(key + "\n");
-					myfile.write("-------------------------------------\n");
-					
-					ArrayList<DocumentInfo> mydocs = map.get(key);
-					for (int dd=0; dd < mydocs.size(); dd++) {
-						String tempstr = String.format("[%d] %s\n", ff, mydocs.get(dd).name);
-						myfile.write(tempstr);
-						ff++;
-					}
-				}
-				
-				myfile.close();
-			}
-		}
-		catch (Exception ex) {
-			System.out.println("EXCEPTION CAUGHT TESTING  bihelp.Save_All_Documents !!!!!");
-			ex.printStackTrace();
-		}
 		
+		//*************************************************************************************
+		//Calls to TEST_MYHOST_6405 take over 3 minutes more like over 5 minutes.
+		//Calls to PROD_MYHOST_6405 take a very very long time maybe its because
+		//of lots of staff usage in real-time.
+		//I am going to use previous output i saved to file for testing gui.
+		//*************************************************************************************
+		/*****
+		Testing_Debugging_helper testdebug = new Testing_Debugging_helper();
+		HashMap<String, ArrayList<DocumentInfo>> map = testdebug.TEST_LOAD_ALL_DOCUMENTS("my_test_output_from_TEST_MYHOST_6405.txt");
+		
+		GUI_Frame guiframe = new GUI_Frame();
+		
+		Tree_Unknown_Path_FolderID unknown_path_tree_panel = new Tree_Unknown_Path_FolderID(guiframe);
+		unknown_path_tree_panel.LoadMap(map);
+		
+		Tree_Known_Path_FolderID known_path_tree_panel = new Tree_Known_Path_FolderID();
+
+		guiframe.Load_Trees(unknown_path_tree_panel, known_path_tree_panel);
+		******/
 		
 		System.out.println();
         System.out.println("MAIN DONE");
